@@ -1,5 +1,6 @@
 package com.hellogender.hellogender.service;
 
+import com.hellogender.hellogender.models.Gender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 @Service
 public class GenderRecognitionService {
 
+    // TODO:Extract to separate provider, get from file
     private final List<String> femaleNames = new ArrayList<>();
     private final List<String> maleNames = new ArrayList<>();
 
@@ -44,6 +46,16 @@ public class GenderRecognitionService {
             return variantOne(name);
         } else {
             throw new IllegalArgumentException("Wrong variant number");
+        }
+    }
+
+    public List<String> getTokenList(Gender gender) {
+        if (gender.equals(Gender.MALE)) {
+            return maleNames;
+        } else if (gender.equals(Gender.FEMALE)) {
+            return femaleNames;
+        } else {
+            throw new IllegalArgumentException("Unrecognized gender provided");
         }
     }
 
