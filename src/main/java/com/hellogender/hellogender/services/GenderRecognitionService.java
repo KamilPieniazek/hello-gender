@@ -1,4 +1,4 @@
-package com.hellogender.hellogender.service;
+package com.hellogender.hellogender.services;
 
 import com.hellogender.hellogender.models.Gender;
 import org.springframework.stereotype.Service;
@@ -40,34 +40,59 @@ public class GenderRecognitionService {
         maleNames.add("Ryszard");
     }
 
-    public String recognizeGender(String name, String algorithmVariant) {
+    public Gender recognizeGender(String name, String algorithmVariant) {
 
         if (algorithmVariant.equals("1")) {
-            return variantOne(name);
+            return recognizeGenderByFirstToken(name);
+        } else if (algorithmVariant.equals("2")) {
+            return recognizeGenderByMajorityRule(name);
         } else {
             throw new IllegalArgumentException("Wrong variant number");
         }
     }
 
     public List<String> getTokenList(Gender gender) {
-        if (gender.equals(Gender.MALE)) {
-            return maleNames;
-        } else if (gender.equals(Gender.FEMALE)) {
+        if (gender.equals(Gender.FEMALE)) {
             return femaleNames;
+        } else if (gender.equals(Gender.MALE)) {
+            return maleNames;
         } else {
             throw new IllegalArgumentException("Unrecognized gender provided");
         }
     }
 
-    private String variantOne(String name) {
+    private Gender recognizeGenderByFirstToken(String name) {
         String firstToken = name.split(" ")[0];
 
         if (femaleNames.contains(firstToken)) {
-            return "FEMALE";
+            return Gender.FEMALE;
         } else if (maleNames.contains(firstToken)) {
-            return "MALE";
+            return Gender.MALE;
         } else {
-            return "INCONCLUSIVE";
+            return Gender.INCONCLUSIVE;
         }
+    }
+
+    private Gender recognizeGenderByMajorityRule(String name) {
+        int femaleNamesCount = 0;
+        int maleNamesCount = 0;
+        String[] nameTokens = name.split(" ");
+
+        for (String nameToken : nameTokens) {
+            if (femaleNames.contains(nameToken)) {
+                femaleNamesCount++;
+            } else if (maleNames.contains(nameToken)) {
+                maleNamesCount++;
+            }
+        }
+
+        if (femaleNamesCount > maleNamesCount) {
+            return Gender.FEMALE;
+        }
+        if (maleNamesCount > femaleNamesCount) {
+            return Gender.MALE;
+        }
+
+        return Gender.INCONCLUSIVE;
     }
 }
