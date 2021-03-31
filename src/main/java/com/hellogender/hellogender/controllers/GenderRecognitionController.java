@@ -18,7 +18,7 @@ public class GenderRecognitionController {
     @GetMapping("/recognizeGender")
     public String recognizeGender(@RequestParam String name, @RequestParam String algorithmVariant) {
         // TODO: Validate algorithm variant?
-        return genderRecognitionService.recognizeGender(name, algorithmVariant);
+        return genderRecognitionService.recognizeGender(name, algorithmVariant).name();
     }
 
     // TODO: Return better validation error message
