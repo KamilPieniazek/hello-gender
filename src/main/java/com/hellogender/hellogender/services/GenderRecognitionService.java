@@ -1,4 +1,4 @@
-package com.hellogender.hellogender.service;
+package com.hellogender.hellogender.services;
 
 import com.hellogender.hellogender.models.Gender;
 import org.springframework.stereotype.Service;
@@ -73,7 +73,7 @@ public class GenderRecognitionService {
         }
     }
 
-    public Gender recognizeGenderByMajorityRule(String name) {
+    private Gender recognizeGenderByMajorityRule(String name) {
         int femaleNamesCount = 0;
         int maleNamesCount = 0;
         String[] nameTokens = name.split(" ");

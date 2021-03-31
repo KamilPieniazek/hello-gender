@@ -1,7 +1,7 @@
 package com.hellogender.hellogender.controllers;
 
 import com.hellogender.hellogender.models.Gender;
-import com.hellogender.hellogender.service.GenderRecognitionService;
+import com.hellogender.hellogender.services.GenderRecognitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
