@@ -1,56 +1,73 @@
 package com.hellogender.hellogender.gender_recognition;
 
+import com.hellogender.hellogender.Configuration;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class GenderClassifier {
-    // TODO: Get from file
-    private final List<String> femaleNames = new ArrayList<>();
-    private final List<String> maleNames = new ArrayList<>();
-
-    public GenderClassifier() {
-        femaleNames.add("Maria");
-        femaleNames.add("Krystyna");
-        femaleNames.add("Anna");
-        femaleNames.add("Barbara");
-        femaleNames.add("Teresa");
-        femaleNames.add("Elżbieta");
-        femaleNames.add("Janina");
-        femaleNames.add("Zofia");
-        femaleNames.add("Jadwiga");
-        femaleNames.add("Danuta");
-        femaleNames.add("Halina");
-        femaleNames.add("Irena");
-
-        maleNames.add("Jan");
-        maleNames.add("Stanisław");
-        maleNames.add("Andrzej");
-        maleNames.add("Józef");
-        maleNames.add("Tadeusz");
-        maleNames.add("Jerzy");
-        maleNames.add("Zbigniew");
-        maleNames.add("Krzysztof");
-        maleNames.add("Henryk");
-        maleNames.add("Ryszard");
-    }
-
-    // TODO: Handle lower cases
-    public boolean isMale(String name) {
-        return maleNames.contains(name);
-    }
-
     public boolean isFemale(String name) {
-        return femaleNames.contains(name);
+        return isNameInFile(name, Configuration.femaleTokenPath);
+    }
+
+    public boolean isMale(String name) {
+        return isNameInFile(name, Configuration.maleTokenPath);
     }
 
     public List<String> getFemaleNames() {
-        return femaleNames;
+        return collectNamesFromFile(Configuration.femaleTokenPath);
     }
 
     public List<String> getMaleNames() {
-        return maleNames;
+        return collectNamesFromFile(Configuration.maleTokenPath);
+    }
+
+    private boolean isNameInFile(String name, String filePath) {
+        Stream<String> lines = null;
+        boolean hasMatch = false;
+
+        try {
+            Path path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI());
+            lines = Files.lines(path);
+            hasMatch = lines.anyMatch(line -> line.equalsIgnoreCase(name));
+            lines.close();
+        } catch (Exception e) {
+            // TODO: Better exception hadler
+            System.out.println(e);
+        } finally {
+            if (lines != null) {
+                lines.close();
+            }
+        }
+
+        return hasMatch;
+    }
+
+    private List<String> collectNamesFromFile(String filePath) {
+        Stream<String> lines = null;
+        List<String> names = Collections.emptyList();
+
+        try {
+            Path path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI());
+            lines = Files.lines(path);
+            names = lines.collect(Collectors.toList());
+            lines.close();
+        } catch (Exception e) {
+            // TODO: Better exception hadler
+            System.out.println(e);
+        } finally {
+            if (lines != null) {
+                lines.close();
+            }
+        }
+
+        return names;
     }
 }
