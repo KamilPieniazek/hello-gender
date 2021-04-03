@@ -31,5 +31,4 @@ public class GenderRecognitionService {
             throw new IllegalArgumentException("Unrecognized gender provided");
         }
     }
-
 }
