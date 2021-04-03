@@ -1,6 +1,8 @@
 package com.hellogender.hellogender.gender_recognition;
 
 import com.hellogender.hellogender.Configuration;
+import com.hellogender.hellogender.FileUtilities;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Files;
@@ -12,7 +14,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@AllArgsConstructor
 public class GenderClassifier {
+    private final FileUtilities fileUtilities;
+
     public boolean isFemale(String name) {
         return isNameInFile(name, Configuration.femaleTokenPath);
     }
@@ -34,8 +39,7 @@ public class GenderClassifier {
         boolean hasMatch = false;
 
         try {
-            Path path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI());
-            lines = Files.lines(path);
+            lines = fileUtilities.getFileContent(filePath);
             hasMatch = lines.anyMatch(line -> line.equalsIgnoreCase(name));
             lines.close();
         } catch (Exception e) {
@@ -55,8 +59,7 @@ public class GenderClassifier {
         List<String> names = Collections.emptyList();
 
         try {
-            Path path = Paths.get(getClass().getClassLoader().getResource(filePath).toURI());
-            lines = Files.lines(path);
+            lines = fileUtilities.getFileContent(filePath);
             names = lines.collect(Collectors.toList());
             lines.close();
         } catch (Exception e) {
