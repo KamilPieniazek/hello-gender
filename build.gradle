@@ -1,8 +1,20 @@
+buildscript {
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.4.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "com.palantir.docker" version "0.22.1"
+	id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
 
 group = 'com.hellogender'
 version = '0.0.1-SNAPSHOT'
@@ -13,9 +25,16 @@ repositories {
 	jcenter()
 }
 
+docker{
+	name "${project.name}"
+	dockerfile file('src/docker/Dockerfile')
+	copySpec.from(jar).rename(".*","hello-gender-app.jar")
+	buildArgs(['JAR_FILE':"hello-gender-app.jar"])
+}
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
 
 	compileOnly 'org.projectlombok:lombok:1.18.16'
 	annotationProcessor 'org.projectlombok:lombok:1.18.16'
@@ -23,9 +42,28 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.16'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
-	testImplementation "org.mockito:mockito-inline:3.+"
+	testCompile "org.mockito:mockito-inline:3.+"
 }
 
 test {
 	useJUnitPlatform()
 }
+
+shadowJar {
+	manifest {
+		attributes 'MainClass': 'com.hellogender.hellogender.HelloGenderApplication'
+	}
+}
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'com.hellogender.hellogender.HelloGenderApplication'
+		)
+	}
+
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
+

@@ -45,6 +45,7 @@ public class GenderClassifier {
         } catch (Exception e) {
             // TODO: Better exception hadler
             System.out.println(e);
+            e.printStackTrace();
         } finally {
             if (lines != null) {
                 lines.close();
@@ -65,6 +66,7 @@ public class GenderClassifier {
         } catch (Exception e) {
             // TODO: Better exception hadler
             System.out.println(e);
+            e.printStackTrace();
         } finally {
             if (lines != null) {
                 lines.close();
