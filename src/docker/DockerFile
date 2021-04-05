@@ -1,5 +1,0 @@
-FROM openjdk:12-jdk-alpine
-VOLUME /tmp
-ARG JAR_FILE
-COPY ${JAR_FILE} hello-gender-app.jar
-ENTRYPOINT ["java","-jar","/hello-gender-app.jar"]
