@@ -1,5 +1,6 @@
-package com.hellogender.hellogender.gender_recognition;
+package com.hellogender.hellogender.unit_tests.gender_recognition;
 
+import com.hellogender.hellogender.gender_recognition.RecognizerProvider;
 import com.hellogender.hellogender.gender_recognition.recognizers.FirstTokenRecognizer;
 import com.hellogender.hellogender.gender_recognition.recognizers.GenderRecognizer;
 import com.hellogender.hellogender.gender_recognition.recognizers.MajorityRuleTokenRecognizer;

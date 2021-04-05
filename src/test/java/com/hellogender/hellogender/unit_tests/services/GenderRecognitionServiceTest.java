@@ -1,9 +1,10 @@
-package com.hellogender.hellogender.services;
+package com.hellogender.hellogender.unit_tests.services;
 
 import com.hellogender.hellogender.gender_recognition.GenderClassifier;
 import com.hellogender.hellogender.gender_recognition.RecognizerProvider;
 import com.hellogender.hellogender.gender_recognition.recognizers.GenderRecognizer;
 import com.hellogender.hellogender.models.Gender;
+import com.hellogender.hellogender.services.GenderRecognitionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

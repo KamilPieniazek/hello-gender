@@ -42,7 +42,9 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.16'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
-	testCompile "org.mockito:mockito-inline:3.+"
+	testCompile 'org.mockito:mockito-inline:3.+'
+
+	testImplementation 'com.google.code.gson:gson:2.8.6'
 }
 
 test {

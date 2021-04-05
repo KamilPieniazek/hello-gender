@@ -1,6 +1,7 @@
-package com.hellogender.hellogender.gender_recognition.recognizers;
+package com.hellogender.hellogender.unit_tests.gender_recognition.recognizers;
 
 import com.hellogender.hellogender.gender_recognition.GenderClassifier;
+import com.hellogender.hellogender.gender_recognition.recognizers.FirstTokenRecognizer;
 import com.hellogender.hellogender.models.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
