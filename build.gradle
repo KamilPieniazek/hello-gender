@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "com.palantir.docker" version "0.22.1"
 }
 
 group = 'com.hellogender'
@@ -13,6 +14,12 @@ repositories {
 	jcenter()
 }
 
+docker{
+	name "${project.name}"
+	dockerfile file('src/docker/Dockerfile')
+	copySpec.from(jar).rename(".*","hello-gender-app.jar")
+	buildArgs(['JAR_FILE':"hello-gender-app.jar"])
+}
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -24,8 +31,22 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
 	testImplementation "org.mockito:mockito-inline:3.+"
+
 }
 
 test {
 	useJUnitPlatform()
 }
+
+bootJar {
+	enabled = false
+}
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'com/hellogender/hellogender/HelloGenderApplication'
+		)
+	}
+}
+
+
