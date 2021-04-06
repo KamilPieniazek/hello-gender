@@ -45,6 +45,8 @@ dependencies {
 	testCompile 'org.mockito:mockito-inline:3.+'
 
 	testImplementation 'com.google.code.gson:gson:2.8.6'
+
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.1.Final'
 }
 
 test {

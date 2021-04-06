@@ -1,5 +1,6 @@
 package com.hellogender.hellogender.unit_tests.controllers;
 
+import com.hellogender.hellogender.controllers.GenderRecognitionController;
 import com.hellogender.hellogender.models.Gender;
 import com.hellogender.hellogender.services.GenderRecognitionService;
 import org.junit.jupiter.api.BeforeEach;
