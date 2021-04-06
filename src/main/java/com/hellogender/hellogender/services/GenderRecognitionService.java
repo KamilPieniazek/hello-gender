@@ -28,7 +28,7 @@ public class GenderRecognitionService {
         } else if (gender.equals(Gender.MALE)) {
             return genderClassifier.getMaleNames();
         } else {
-            throw new IllegalArgumentException("Unrecognized gender provided");
+            throw new IllegalArgumentException("Provided gender: " + gender.name() + " Supported genders: MALE or FEMALE");
         }
     }
 }
