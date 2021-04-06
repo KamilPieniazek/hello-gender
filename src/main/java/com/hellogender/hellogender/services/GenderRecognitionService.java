@@ -5,6 +5,7 @@ import com.hellogender.hellogender.gender_recognition.GenderClassifier;
 import com.hellogender.hellogender.gender_recognition.recognizers.GenderRecognizer;
 import com.hellogender.hellogender.models.Gender;
 import lombok.AllArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class GenderRecognitionService {
     private final GenderClassifier genderClassifier;
     private final RecognizerProvider recognizerProvider;
 
-    public Gender recognizeGender(String name, String algorithmVariant) {
-        GenderRecognizer genderRecognizer = recognizerProvider.provide(algorithmVariant);
+    public Gender recognizeGender(String name, String algorithmVariant, @Nullable String version) {
+        GenderRecognizer genderRecognizer = recognizerProvider.provide(algorithmVariant, version);
 
         return genderRecognizer.recognize(name);
     }
@@ -28,7 +29,7 @@ public class GenderRecognitionService {
         } else if (gender.equals(Gender.MALE)) {
             return genderClassifier.getMaleNames();
         } else {
-            throw new IllegalArgumentException("Unrecognized gender provided");
+            throw new IllegalArgumentException("Provided gender: " + gender.name() + " Supported genders: MALE or FEMALE");
         }
     }
 }

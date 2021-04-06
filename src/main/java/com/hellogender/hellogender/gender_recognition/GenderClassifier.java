@@ -3,6 +3,7 @@ package com.hellogender.hellogender.gender_recognition;
 import com.hellogender.hellogender.Configuration;
 import com.hellogender.hellogender.FileUtilities;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class GenderClassifier {
     private final FileUtilities fileUtilities;
 
@@ -40,9 +42,7 @@ public class GenderClassifier {
             hasMatch = lines.anyMatch(line -> line.equalsIgnoreCase(name));
             lines.close();
         } catch (Exception e) {
-            // TODO: Better exception hadler
-            System.out.println(e);
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
             if (lines != null) {
                 lines.close();
@@ -61,9 +61,7 @@ public class GenderClassifier {
             names = lines.collect(Collectors.toList());
             lines.close();
         } catch (Exception e) {
-            // TODO: Better exception hadler
-            System.out.println(e);
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
             if (lines != null) {
                 lines.close();
