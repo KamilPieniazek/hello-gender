@@ -1,4 +1,4 @@
-package com.hellogender.hellogender.controllers;
+package com.hellogender.hellogender.unit_tests.controllers;
 
 import com.hellogender.hellogender.models.Gender;
 import com.hellogender.hellogender.services.GenderRecognitionService;
