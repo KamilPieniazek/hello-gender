@@ -31,8 +31,9 @@ class RecognizerProviderTest {
     @Test
     void provide_getsFirstTokenRecognizer() {
         String algorithmVariant = "1";
+        String version="0";
 
-        GenderRecognizer result = recognizerProvider.provide(algorithmVariant);
+        GenderRecognizer result = recognizerProvider.provide(algorithmVariant, version);
 
         assertEquals(firstTokenRecognizerMock, result);
     }
@@ -40,8 +41,9 @@ class RecognizerProviderTest {
     @Test
     void provide_getsMajorityRuleTokenRecognizer() {
         String algorithmVariant = "2";
+        String version="0";
 
-        GenderRecognizer result = recognizerProvider.provide(algorithmVariant);
+        GenderRecognizer result = recognizerProvider.provide(algorithmVariant, version);
 
         assertEquals(majorityRuleTokenRecognizerMock, result);
     }
@@ -50,7 +52,7 @@ class RecognizerProviderTest {
     void provide_forUnrecognizedRecognizer_throwsException() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> recognizerProvider.provide("Non existing variant")
+                () -> recognizerProvider.provide("Non existing variant", "Non existing version")
         );
     }
 }

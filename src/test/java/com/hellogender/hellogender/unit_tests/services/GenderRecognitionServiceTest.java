@@ -36,14 +36,15 @@ class GenderRecognitionServiceTest {
     void recognizeGender_usesProvidedNameAndVariant() {
         String name = "Kamil";
         String algorithmVariant = "1410";
+        String version="0";
 
-        when(recognizerProviderMock.provide(algorithmVariant)).thenReturn(genderRecognizerMock);
+        when(recognizerProviderMock.provide(algorithmVariant, version)).thenReturn(genderRecognizerMock);
         when(genderRecognizerMock.recognize(name)).thenReturn(Gender.MALE);
 
-        Gender result = genderRecognitionService.recognizeGender(name, algorithmVariant);
+        Gender result = genderRecognitionService.recognizeGender(name, algorithmVariant,version);
 
         assertEquals(Gender.MALE, result);
-        verify(recognizerProviderMock, times(1)).provide(algorithmVariant);
+        verify(recognizerProviderMock, times(1)).provide(algorithmVariant, version);
         verify(genderRecognizerMock, times(1)).recognize(name);
     }
 

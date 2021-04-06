@@ -32,13 +32,14 @@ class GenderRecognitionControllerTest {
     void recognizeGender() {
         String name = "Jan Maria Rokita";
         String algorithmVariant = "1";
+        String version = "0";
 
-        when(genderRecognitionServiceMock.recognizeGender(anyString(), anyString())).thenReturn(Gender.MALE);
+        when(genderRecognitionServiceMock.recognizeGender(anyString(),anyString(), anyString())).thenReturn(Gender.MALE);
 
-        String result = genderRecognitionController.recognizeGender(name, algorithmVariant);
+        String result = genderRecognitionController.recognizeGender(name, algorithmVariant,version);
 
         assertEquals(Gender.MALE.name(), result);
-        verify(genderRecognitionServiceMock, times(1)).recognizeGender(name, algorithmVariant);
+        verify(genderRecognitionServiceMock, times(1)).recognizeGender(name, algorithmVariant,version);
     }
 
     @Test
